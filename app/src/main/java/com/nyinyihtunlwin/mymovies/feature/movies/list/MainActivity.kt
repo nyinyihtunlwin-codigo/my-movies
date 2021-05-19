@@ -2,6 +2,8 @@ package com.nyinyihtunlwin.mymovies.feature.movies.list
 
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.nyinyihtunlwin.domain.exception.ApiException
+import com.nyinyihtunlwin.domain.exception.NetworkException
 import com.nyinyihtunlwin.domain.model.movie.Movie
 import com.nyinyihtunlwin.domain.viewstate.MovieListViewState
 import com.nyinyihtunlwin.mymovies.databinding.ActivityMainBinding
@@ -61,9 +63,17 @@ class MainActivity : BaseMviActivity<MovieListViewState, MovieListView, MovieLis
                 renderMovies(viewState.movies)
             }
             is MovieListViewState.Error -> {
-                binding.swipeRefresh.isRefreshing = false
-                showToast(viewState.t.localizedMessage)
+                renderError(viewState)
             }
+        }
+    }
+
+    private fun renderError(viewState: MovieListViewState.Error) {
+        binding.swipeRefresh.isRefreshing = false
+        when (viewState.t) {
+            is NetworkException -> showToast("Network Error!")
+            is ApiException -> showToast((viewState.t as ApiException).errorMessage)
+            else -> viewState.t.printStackTrace()
         }
     }
 

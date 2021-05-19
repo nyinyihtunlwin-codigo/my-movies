@@ -91,6 +91,7 @@ class DetailsActivity :
             .into(binding.ivMovie)
         binding.tvTitle.text = movie.title
         binding.tvOverview.text = movie.overview
+        binding.tvReleaseDate.text = movie.releaseDate
     }
 
     override fun movieDetailsIntent(): Observable<Int> {

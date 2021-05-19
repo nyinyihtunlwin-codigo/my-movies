@@ -16,6 +16,7 @@ class MovieViewHolder(
         Glide.with(binding.root.context)
             .load(mData?.posterPath)
             .into(binding.ivMovie)
+        binding.tvTitle.text = data.title
     }
 
     override fun onClick(v: View?) {

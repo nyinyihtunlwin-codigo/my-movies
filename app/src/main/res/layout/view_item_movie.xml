@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/ivMovie"
             android:layout_width="@dimen/_145sdp"
@@ -18,5 +19,14 @@
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
             android:src="@drawable/movie_placeholder" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivMovie"
+            android:gravity="center"
+            android:paddingBottom="@dimen/_4sdp"
+            android:textSize="18sp" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -14,4 +14,8 @@ class CacheMovieDataSource(private val dbHelper: RoomDbHelper) {
     fun getAllMovies(): Observable<List<MovieEntity>> {
         return dbHelper.getMovieDao().getAllMovies().toObservable()
     }
+
+    fun getMovieById(id: Int): Observable<MovieEntity> {
+        return dbHelper.getMovieDao().getMovieById(id).toObservable()
+    }
 }

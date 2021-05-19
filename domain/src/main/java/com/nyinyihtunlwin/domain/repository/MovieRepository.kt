@@ -5,4 +5,5 @@ import io.reactivex.Observable
 
 interface MovieRepository {
     fun getNowPlayingMovieList(page: Int?): Observable<List<Movie>>
+    fun getMovieById(id : Int): Observable<Movie>
 }

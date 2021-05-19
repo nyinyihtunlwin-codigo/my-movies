@@ -12,10 +12,10 @@ class MovieMapper(private val dateUtils: DateUtils) {
             val movie = Movie(
                 it.movieId,
                 it.title,
-                "https://image.tmdb.org/t/p/w500${it.posterPath}",
-                "https://image.tmdb.org/t/p/w500${it.backdropPath}",
                 it.overview,
-                dateUtils.convertDate(it.releaseDate)
+                dateUtils.convertDate(it.releaseDate),
+                "https://image.tmdb.org/t/p/w500${it.posterPath}",
+                "https://image.tmdb.org/t/p/w500${it.backdropPath}"
             )
             movies.add(movie)
         }

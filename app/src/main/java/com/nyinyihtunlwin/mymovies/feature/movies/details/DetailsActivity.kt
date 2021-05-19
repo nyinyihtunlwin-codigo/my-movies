@@ -4,10 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.nyinyihtunlwin.domain.model.movie.Movie
+import com.nyinyihtunlwin.domain.viewstate.MovieDetailsViewState
 import com.nyinyihtunlwin.mymovies.databinding.ActivityDetailsBinding
+import com.nyinyihtunlwin.mymovies.feature.base.BaseMviActivity
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
+import org.koin.android.ext.android.inject
 
-class DetailsActivity : AppCompatActivity() {
+class DetailsActivity :
+    BaseMviActivity<MovieDetailsViewState, MovieDetailsView, MovieDetailsPresenter>(),
+    MovieDetailsView {
 
     companion object {
         fun newInstance(context: Context, id: Int): Intent {
@@ -19,6 +27,9 @@ class DetailsActivity : AppCompatActivity() {
 
     private var movieId: Int = 0
     private lateinit var binding: ActivityDetailsBinding
+
+    private val mPresenter: MovieDetailsPresenter by inject()
+    private val movieDetailsRelay: PublishSubject<Int> = PublishSubject.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +43,15 @@ class DetailsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        fetchDetails(movieId)
+    }
+
+    private fun fetchDetails(movieId: Int) {
+        movieDetailsRelay.onNext(movieId)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -40,5 +60,40 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun createPresenter(): MovieDetailsPresenter {
+        return mPresenter
+    }
+
+    override fun render(viewState: MovieDetailsViewState) {
+        when (viewState) {
+            is MovieDetailsViewState.Progress -> {
+                showLoading()
+            }
+            is MovieDetailsViewState.MovieDetails -> {
+                hideLoading()
+                renderMovieDetails(viewState.movie)
+            }
+            is MovieDetailsViewState.Error -> {
+                hideLoading()
+                showToast(viewState.t.localizedMessage)
+            }
+        }
+    }
+
+    private fun renderMovieDetails(movie: Movie) {
+        Glide.with(binding.root.context)
+            .load(movie.backdropPath)
+            .into(binding.ivBackgroundPoster)
+        Glide.with(binding.root.context)
+            .load(movie.posterPath)
+            .into(binding.ivMovie)
+        binding.tvTitle.text = movie.title
+        binding.tvOverview.text = movie.overview
+    }
+
+    override fun movieDetailsIntent(): Observable<Int> {
+        return movieDetailsRelay
     }
 }

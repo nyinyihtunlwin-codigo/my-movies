@@ -14,11 +14,6 @@ class MovieRepositoryImpl(
     private val movieMapper: MovieMapper
 ) : MovieRepository {
 
-    /*override fun getNowPlayingMovieList(page: Int?): Observable<List<Movie>> {
-        return networkMovieDataSource.getNowPlayingMovies(page)
-            .map { movieMapper.mapMovieInfoList(it.results) }
-    }*/
-
     override fun getNowPlayingMovieList(page: Int?): Observable<List<Movie>> {
         return Observable.concat(
             cacheMovieDataSource.getAllMovies()
@@ -38,13 +33,28 @@ class MovieRepositoryImpl(
                     MovieEntity(
                         it.id,
                         it.title,
-                        it.overview, it.release_date, it.poster_path,
-                        it.backdrop_path
+                        it.overview,
+                        it.release_date,
+                        "https://image.tmdb.org/t/p/w500${it.poster_path}",
+                        "https://image.tmdb.org/t/p/w500${it.backdrop_path}"
                     )
                 )
             }.toList().toObservable()
             .flatMap { cacheMovieDataSource.saveMovies(it) }
             .map { movieMapper.mapMovieList(it) }
+    }
+
+    override fun getMovieById(id: Int): Observable<Movie> {
+        return cacheMovieDataSource.getMovieById(id).flatMap {
+            Observable.just(
+                Movie(
+                    it.movieId,
+                    it.title,
+                    it.overview, it.releaseDate, it.posterPath,
+                    it.backdropPath
+                )
+            )
+        }
     }
 
 }

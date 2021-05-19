@@ -13,8 +13,8 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/ivMovie"
-            android:layout_width="165dp"
-            android:layout_height="240dp"
+            android:layout_width="@dimen/_145sdp"
+            android:layout_height="@dimen/_200sdp"
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
             android:src="@drawable/movie_placeholder" />

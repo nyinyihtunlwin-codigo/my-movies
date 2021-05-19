@@ -13,8 +13,6 @@ class MovieListPresenter(private val interactor: MovieListInteractor) :
             intent(MovieListView::nowPlayingMovieListIntent)
                 .flatMap(interactor::executeNowPlayingMovie)
 
-        val allIntents = Observable.mergeArray(nowPlayingMovieIntent)
-
-        subscribeViewState(allIntents, MovieListView::render)
+        subscribeViewState(nowPlayingMovieIntent, MovieListView::render)
     }
 }

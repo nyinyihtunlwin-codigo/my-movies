@@ -1,29 +1,21 @@
 package com.nyinyihtunlwin.data.mapper
 
-import com.nyinyihtunlwin.data.response.MovieResponse
+import com.nyinyihtunlwin.data.database.entity.MovieEntity
 import com.nyinyihtunlwin.data.utils.DateUtils
 import com.nyinyihtunlwin.domain.model.movie.Movie
 
 class MovieMapper(private val dateUtils: DateUtils) {
 
-    fun mapMovieInfoList(list: List<MovieResponse>): List<Movie> {
+    fun mapMovieList(list: List<MovieEntity>): List<Movie> {
         val movies = arrayListOf<Movie>()
         list.forEach {
             val movie = Movie(
-                it.vote_count,
-                it.id,
-                it.video,
-                it.vote_average,
+                it.movieId,
                 it.title,
-                it.popularity,
-                "https://image.tmdb.org/t/p/w500${it.poster_path}",
-                it.original_language,
-                it.original_title,
-                it.genre_ids,
-                "https://image.tmdb.org/t/p/w500${it.backdrop_path}",
-                it.adult,
+                "https://image.tmdb.org/t/p/w500${it.posterPath}",
+                "https://image.tmdb.org/t/p/w500${it.backdropPath}",
                 it.overview,
-                dateUtils.convertDate(it.release_date)
+                dateUtils.convertDate(it.releaseDate)
             )
             movies.add(movie)
         }

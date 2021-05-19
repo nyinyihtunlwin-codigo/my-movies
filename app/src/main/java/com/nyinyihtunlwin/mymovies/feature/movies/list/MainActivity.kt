@@ -6,6 +6,7 @@ import com.nyinyihtunlwin.domain.model.movie.Movie
 import com.nyinyihtunlwin.domain.viewstate.MovieListViewState
 import com.nyinyihtunlwin.mymovies.databinding.ActivityMainBinding
 import com.nyinyihtunlwin.mymovies.feature.base.BaseMviActivity
+import com.nyinyihtunlwin.mymovies.feature.movies.details.DetailsActivity
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import org.koin.android.ext.android.inject
@@ -26,7 +27,7 @@ class MainActivity : BaseMviActivity<MovieListViewState, MovieListView, MovieLis
 
         mAdapter = MovieAdapter(this, object : MovieDelegate {
             override fun onTapMovie(movie: Movie) {
-
+                startActivity(DetailsActivity.newInstance(this@MainActivity, movie.id))
             }
         })
         binding.rvMovies.adapter = mAdapter

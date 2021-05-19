@@ -1,6 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.5.0"
+    ext.versions = ['compileSdkVersion'     : 30,
+                    'minSdkVersion'         : 22,
+                    'targetSdkVersion'      : 30,
+                    'rxKotlin'              : '2.4.0-beta.1',
+                    'rxAndroid'             : '2.1.1',
+                    'retrofit'              : '2.5.0',
+                    'room'                  : '2.0.0-beta01',
+                    'gson'                  : '2.8.5',
+                    'glide'                 : '4.9.0',
+                    'mosby'                 : '3.1.0',
+                    'timber'                : '4.7.1',
+                    'koin'                  : '1.0.2']
+
     repositories {
         google()
         mavenCentral()

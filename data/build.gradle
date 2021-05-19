@@ -18,9 +18,17 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_KEY", "\"6eb6146f403f23477c11206ed0c76288\""
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            buildConfigField "String", "API_KEY", "\"6eb6146f403f23477c11206ed0c76288\""
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {

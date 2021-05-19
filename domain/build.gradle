@@ -43,4 +43,5 @@ dependencies {
 
     //rx
     implementation "io.reactivex.rxjava2:rxkotlin:${versions.rxKotlin}"
+    implementation "io.reactivex.rxjava2:rxjava:${versions.rxJava}"
 }
